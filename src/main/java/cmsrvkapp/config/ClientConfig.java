@@ -3,8 +3,6 @@ package cmsrvkapp.config;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-
 @Validated
 public final class ClientConfig {
     private String data;

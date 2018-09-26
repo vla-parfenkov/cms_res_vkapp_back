@@ -4,7 +4,6 @@ import cmsrvkapp.config.ClientConfig;
 import cmsrvkapp.authorization.views.ResponseView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.postgresql.util.PGobject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,7 +13,6 @@ import cmsrvkapp.authorization.views.UserView;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 
 @SuppressWarnings("SqlNoDataSourceInspection")
@@ -71,7 +69,7 @@ public class JdbcUserService implements UserService {
     public ClientConfig getConfig(UserView user) {
         String sql = "SELECT config FROM users WHERE login = ?";
         ClientConfig config = template.queryForObject(sql, READ_CONFIG_MAPPER, user.getLogin());
-        if(config != null) {
+        if (config != null) {
             return config;
         } else {
             throw new IllegalArgumentException(ResponseView.ERROR_CONFIG_NOT_FOUND.getResponse());
@@ -80,9 +78,8 @@ public class JdbcUserService implements UserService {
 
     @Override
     public void setConfig(UserView user, ClientConfig config) {
-        String sql = "UPDATE users SET config = ? WHERE login = ?";
-        PGobject pGobject = new PGobject();
-        pGobject.setType("jsonb");
+        PGobject pgobject = new PGobject();
+        pgobject.setType("jsonb");
         String json = null;
         try {
             json = objectMapper.writeValueAsString(config);
@@ -90,10 +87,11 @@ public class JdbcUserService implements UserService {
             throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
         }
         try {
-            pGobject.setValue(json);
+            pgobject.setValue(json);
         } catch (SQLException ex) {
             throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
         }
-        template.update(sql, pGobject, user.getLogin());
+        String sql = "UPDATE users SET config = ? WHERE login = ?";
+        template.update(sql, pgobject, user.getLogin());
     }
 }

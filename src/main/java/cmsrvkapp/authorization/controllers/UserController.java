@@ -114,8 +114,8 @@ public class UserController {
     public ResponseEntity getConfig(@PathVariable(value = "user") String user,
                                      @RequestHeader(value = "Accept", required = false) String accept,
                                     HttpSession httpSession) {
-        //final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-        //if (currentUser.equals(user)) {
+        final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+        if (currentUser.equals(user)) {
             try {
                 UserView userView = dbUsers.getByLoginOrEmail(user);
                 ClientConfig config = dbUsers.getConfig(userView);
@@ -125,8 +125,8 @@ public class UserController {
             } catch (IllegalArgumentException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_CONFIG_NOT_FOUND);
             }
-        //}
-        //return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_CONFIG);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_CONFIG);
 
     }
 
@@ -137,8 +137,8 @@ public class UserController {
                                     @PathVariable(value = "user") String user,
                                     @RequestHeader(value = "Accept", required = false) String accept,
                                     HttpSession httpSession) {
-        //final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-        //if (currentUser.equals(user)) {
+        final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+        if (currentUser.equals(user)) {
             try {
                 UserView userView = dbUsers.getByLoginOrEmail(user);
                 dbUsers.setConfig(userView, config);
@@ -146,8 +146,8 @@ public class UserController {
             } catch (DataAccessException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_USER_NOT_FOUND);
             }
-        //}
-        //return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_CONFIG);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_CONFIG);
 
     }
 
