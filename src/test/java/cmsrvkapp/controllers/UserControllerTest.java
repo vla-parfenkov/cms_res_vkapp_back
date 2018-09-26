@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.*;
@@ -26,7 +25,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class ControllerTest {
+public class UserControllerTest {
 
     @MockBean
     private UserService userService;
@@ -150,8 +149,6 @@ public class ControllerTest {
     @Test
     public void unsuccessfulChangeUser(){
         final List<String> coockies = login();
-
-
         final HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.put(HttpHeaders.COOKIE, coockies);
         final UserView changeUser = new UserView("bobi@bb.com", "bobi", "qwerty");
@@ -160,7 +157,5 @@ public class ControllerTest {
                 HttpMethod.POST, httpEntity, String.class);
         assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
     }
-
-
 
 }

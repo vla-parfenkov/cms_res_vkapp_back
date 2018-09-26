@@ -9,7 +9,11 @@ public enum ResponseView {
     SUCCESS_LOGOUT(3, "You successfully logged out!"),
     ERROR_USER_ALREADY_EXISTS(4, "User already exists!"),
     ERROR_USER_NOT_FOUND(5, "User not found!"),
-    ERROR_NO_RIGHTS_TO_CHANGE_USER(6, "You have no rights to change this user data!");
+    ERROR_NO_RIGHTS_TO_CHANGE_USER(6, "You have no rights to change this user data!"),
+    ERROR_NO_RIGHTS_CONFIG(7, "You have no rights to look this user configuration!"),
+    SUCCESS_SET_CONFIG(8, "The configuration was successfully downloaded!"),
+    ERROR_CONFIG_NOT_FOUND(9, "Configuration not found!"),
+    ERROR_BAD_CONFIG(10, "Bad Configuration!");
 
 
     private final Integer status;
