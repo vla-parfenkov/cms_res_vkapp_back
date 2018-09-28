@@ -1,0 +1,8 @@
+language: java
+deploy:
+  provider: heroku
+  api_key:
+    secure: sM5zMrCVbSdZIFi6juc1cam4w0YU0pl7gGS7kD7rmIX1QJP7JK1drjEQ2QhEeQp+SOigtnd/GPqfcDK5PLpa796oEfiMw9seW7un1QAWWW7Uo5YeZTBvZg0omfd0f48JaBfqiDWBeZQixX+xXF+D9rWc3Y+LozaADgyOGtTKuA+IrNLboqtO6y9MX4Ji8yXfWES2tNtrMGRZM9SfB//iKmcTaSvt3k9Xv9Y1QG/Rs6RVnC+MmtaGcVc/2Og+pK0aVhOJuKwux35Dq73yBO6HuvEenGH3MlGYVtbAA8tPReB/Efpc0Qz4jHBVaHSBCxxwNHXJZN0Nu6lCgjulNL4UFbmYCrUbqKTq84jSVAS+N/QQdru+TacqRUpCZvPZRgUPiLltifa32KseO+anvXOVT+z/J1yCG2sb7TQLcK2nU0XZC2syDNKeok1ED77+T8PUxR5POW772DnH/9xyDPRbnofeZ6aL4+rbI3GryX6RVh3SiXqI9tZxJ71mw+7gldLOxEOz9Pry79D8FVZq0AzkyJpmog+lysjPHDj5RkRHcF7t8nKmzmA4iWCJ0wON6F2gP6jiBm8p6KaDdmyTtei5NgPn5+ChlvEMsyp66hNMApwpSy1yqjCrjKo1Atb5YlkeBRwVfv1/g57ewu5u3gAr97LXek/Zn5h648uSD47dqPs=
+  app: cmsvkapp
+  on:
+    repo: vla-parfenkov/cms_res_vkapp_back
