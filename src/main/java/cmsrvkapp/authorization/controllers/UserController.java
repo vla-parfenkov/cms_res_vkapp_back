@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 @RestController
-@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/api")
 @Validated
 public class UserController {
