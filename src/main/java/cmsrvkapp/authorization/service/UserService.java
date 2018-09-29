@@ -13,8 +13,8 @@ public interface UserService {
     
     UserView changeUser(UserView user);
 
-    ClientConfig getConfig(UserView user);
+    String getConfig(UserView user);
 
-    void setConfig(UserView user, ClientConfig config);
+    void setConfig(UserView user, String config);
 
 }
