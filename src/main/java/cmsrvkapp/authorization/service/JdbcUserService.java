@@ -29,12 +29,9 @@ public class JdbcUserService implements UserService {
                     resultSet.getString("login"),
                     resultSet.getString("password"));
 
-    private static final RowMapper<ClientConfig> READ_CONFIG_MAPPER = (resultSet, rowNumber) -> {
-        try {
-            return new ObjectMapper().readValue(resultSet.getString("config"), ClientConfig.class);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+    private static final RowMapper<String> READ_CONFIG_MAPPER = (resultSet, rowNumber) -> {
+            return resultSet.getString("config");
+
     };
 
 
@@ -66,9 +63,9 @@ public class JdbcUserService implements UserService {
 
 
     @Override
-    public ClientConfig getConfig(UserView user) {
+    public String getConfig(UserView user) {
         String sql = "SELECT config FROM users WHERE login = ?";
-        ClientConfig config = template.queryForObject(sql, READ_CONFIG_MAPPER, user.getLogin());
+        String config = template.queryForObject(sql, READ_CONFIG_MAPPER, user.getLogin());
         if (config != null) {
             return config;
         } else {
@@ -77,17 +74,11 @@ public class JdbcUserService implements UserService {
     }
 
     @Override
-    public void setConfig(UserView user, ClientConfig config) {
+    public void setConfig(UserView user, String config) {
         PGobject pgobject = new PGobject();
         pgobject.setType("jsonb");
-        String json = null;
         try {
-            json = objectMapper.writeValueAsString(config);
-        } catch (JsonProcessingException ex) {
-            throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
-        }
-        try {
-            pgobject.setValue(json);
+            pgobject.setValue(config);
         } catch (SQLException ex) {
             throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
         }
