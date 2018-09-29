@@ -1,11 +1,5 @@
 language: java
-before_install:
- - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
-
-matrix:
- include:
-     - env: JDK='OpenJDK 11'
-       install: . ./install-jdk.sh -F 11 -L GPL</em>
+jdk: openjdk11
 deploy:
   provider: heroku
   api_key:
