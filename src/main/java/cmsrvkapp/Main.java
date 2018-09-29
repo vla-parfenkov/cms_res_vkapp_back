@@ -12,7 +12,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class[]{Main.class}, args);
+        SpringApplication.run(Main.class, args);
     }
 
     @Bean
