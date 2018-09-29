@@ -1,7 +1,6 @@
 package cmsrvkapp.authorization.service;
 
 
-import cmsrvkapp.config.ClientConfig;
 import cmsrvkapp.authorization.views.UserView;
 
 
