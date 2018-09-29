@@ -1,8 +1,6 @@
 package cmsrvkapp.authorization.service;
 
-import cmsrvkapp.config.ClientConfig;
 import cmsrvkapp.authorization.views.ResponseView;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.postgresql.util.PGobject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import cmsrvkapp.authorization.views.UserView;
 
-import java.io.IOException;
+
 import java.sql.SQLException;
 
 
