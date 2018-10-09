@@ -1,8 +1,6 @@
 package cmsrvkapp.authorization.service;
 
-import cmsrvkapp.authorization.views.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.postgresql.util.PGobject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,10 +8,6 @@ import org.springframework.stereotype.Service;
 import cmsrvkapp.authorization.views.UserView;
 
 
-import java.sql.SQLException;
-
-
-@SuppressWarnings("SqlNoDataSourceInspection")
 @Service
 public class JdbcUserService implements UserService {
 
@@ -27,12 +21,6 @@ public class JdbcUserService implements UserService {
                     resultSet.getString("login"),
                     resultSet.getString("password"));
 
-    private static final RowMapper<String> READ_CONFIG_MAPPER = (resultSet, rowNumber) -> {
-            return resultSet.getString("config");
-
-    };
-
-
 
     public JdbcUserService(JdbcTemplate template) {
         this.template = template;
@@ -45,7 +33,7 @@ public class JdbcUserService implements UserService {
     }
 
     @Override
-        public UserView getByLoginOrEmail(String loginOrEmail) {
+    public UserView getByLoginOrEmail(String loginOrEmail) {
         String sql = "SELECT DISTINCT email, login, password FROM users WHERE email = ? OR login = ?";
         return template.queryForObject(sql, READ_USER_MAPPER, loginOrEmail, loginOrEmail);
     }
@@ -57,30 +45,5 @@ public class JdbcUserService implements UserService {
             return user;
         }
         return null;
-    }
-
-
-    @Override
-    public String getConfig(UserView user) {
-        String sql = "SELECT config FROM users WHERE login = ?";
-        String config = template.queryForObject(sql, READ_CONFIG_MAPPER, user.getLogin());
-        if (config != null) {
-            return config;
-        } else {
-            throw new IllegalArgumentException(ResponseView.ERROR_CONFIG_NOT_FOUND.getResponse());
-        }
-    }
-
-    @Override
-    public void setConfig(UserView user, String config) {
-        PGobject pgobject = new PGobject();
-        pgobject.setType("jsonb");
-        try {
-            pgobject.setValue(config);
-        } catch (SQLException ex) {
-            throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
-        }
-        String sql = "UPDATE users SET config = ? WHERE login = ?";
-        template.update(sql, pgobject, user.getLogin());
     }
 }

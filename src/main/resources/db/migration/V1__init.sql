@@ -1,9 +1,13 @@
 CREATE TABLE IF NOT EXISTS users
 (
-email text NOT NULL,
-login text NOT NULL,
-password text NOT NULL,
-config jsonb,
-CONSTRAINT unique_logitextn PRIMARY KEY (login),
-CONSTRAINT unique_email UNIQUE (email)
+email TEXT UNIQUE NOT NULL,
+login TEXT PRIMARY KEY NOT NULL,
+password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS applications
+(
+app_name TEXT PRIMARY KEY NOT NULL,
+creator_login INTEGER REFERENCES users(login),
+config jsonb
 );
