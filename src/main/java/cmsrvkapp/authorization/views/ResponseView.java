@@ -13,7 +13,10 @@ public enum ResponseView {
     ERROR_NO_RIGHTS_CONFIG(7, "You have no rights to look this user configuration!"),
     SUCCESS_SET_CONFIG(8, "The configuration was successfully downloaded!"),
     ERROR_CONFIG_NOT_FOUND(9, "Configuration not found!"),
-    ERROR_BAD_CONFIG(10, "Bad Configuration!");
+    ERROR_BAD_CONFIG(10, "Bad Configuration!"),
+    ERROR_APP_ALREADY_EXISTS(11, "Applications already exists!"),
+    ERROR_APP_NOT_FOUND(12, "Application not found!"),
+    ERROR_NO_RIGHTS_TO_CHANGE_APP(13, "You have no rights to change this app data1");
 
 
     private final Integer status;

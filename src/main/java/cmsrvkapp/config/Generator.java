@@ -10,7 +10,8 @@ public class Generator {
         Iterator<String>  configIterator = config.keys();
         while (configIterator.hasNext()) {
             String configField = configIterator.next();
-            if (template.get(configField) == "~~!~~") {
+            String configFieldValue = template.get(configField).toString();
+            if (configFieldValue.equals(BLANK_VALUE)) {
                 template.put(configField, config.get(configField));
             } else {
                 generate(config.getJSONObject(configField), template.getJSONObject(configField));

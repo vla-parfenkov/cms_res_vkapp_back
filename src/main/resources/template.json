@@ -1,11 +1,11 @@
-export default {
+{
     loadingPage: {
         namePage: 'Страница загрузки',
         background: {
             style: {
                 background: '#ffbdd2'
             }
-        },
+        }
     },
     addressPage: {
         namePage: 'Страница ввода адреса',
@@ -15,7 +15,7 @@ export default {
                 color: '#000000',
                 fontSize: '25px',
                 left: '270px',
-                top: '250px',
+                top: '250px'
             }
         },
         background: {
@@ -58,7 +58,7 @@ export default {
             style: {
                 background: '#ffbdd3'
             }
-        },
+        }
     },
     productPage: {
         namePage: 'Страница блюда',
@@ -66,7 +66,7 @@ export default {
             style: {
                 background: '#ffbdd3'
             }
-        },
+        }
     },
     basketPage: {
         namePage: 'Корзина покупок',
@@ -74,7 +74,7 @@ export default {
             style: {
                 background: '#ffbdd3'
             }
-        },
+        }
     },
     payPage: {
         namePage: 'Страница оплаты',
@@ -82,6 +82,6 @@ export default {
             style: {
                 background: '#ffbdd3'
             }
-        },
-    },
+        }
+    }
 }

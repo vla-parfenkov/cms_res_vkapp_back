@@ -1,0 +1,12 @@
+{
+  loadingPage: {
+    namePage: 'Страница загрузки'
+  },
+  addressPage: {
+    title: {
+      style: {
+        fontSize: '25px'
+      }
+    }
+  }
+}
