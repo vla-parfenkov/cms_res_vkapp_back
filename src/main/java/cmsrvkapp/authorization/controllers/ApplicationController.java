@@ -60,7 +60,7 @@ public class ApplicationController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{appName}/downloadJS")
-    public ResponseEntity dowloadJS(@PathVariable(value = "appName") String appName,
+    public ResponseEntity dowloadJSON(@PathVariable(value = "appName") String appName,
                                     HttpSession httpSession) {
         try {
             ApplicationView app = dbApplications.getByName(appName);

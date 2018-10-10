@@ -55,7 +55,9 @@ public final class ApplicationView {
         }
         if (creatorLogin == null) {
             return other.creatorLogin == null;
-        } else return creatorLogin.equals(other.creatorLogin);
+        } else {
+            return creatorLogin.equals(other.creatorLogin);
+        }
     }
 
 
