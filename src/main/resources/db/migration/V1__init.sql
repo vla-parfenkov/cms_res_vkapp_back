@@ -8,6 +8,6 @@ password TEXT NOT NULL
 CREATE TABLE IF NOT EXISTS applications
 (
 app_name TEXT PRIMARY KEY NOT NULL,
-creator_login INTEGER REFERENCES users(login),
+creator_login TEXT REFERENCES users(login),
 config jsonb
 );
