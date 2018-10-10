@@ -11,9 +11,4 @@ public interface UserService {
     UserView getByLoginOrEmail(String loginOrEmail);
     
     UserView changeUser(UserView user);
-
-    String getConfig(UserView user);
-
-    void setConfig(UserView user, String config);
-
 }
