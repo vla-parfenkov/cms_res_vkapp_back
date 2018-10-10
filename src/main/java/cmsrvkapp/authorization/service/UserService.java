@@ -1,8 +1,6 @@
 package cmsrvkapp.authorization.service;
 
-
 import cmsrvkapp.authorization.views.UserView;
-
 
 public interface UserService {
 

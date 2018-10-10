@@ -7,10 +7,11 @@ import org.postgresql.util.PGobject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
-
+@Service
 public class JdbcApplicationService implements ApplicationService {
 
     private JdbcTemplate template;

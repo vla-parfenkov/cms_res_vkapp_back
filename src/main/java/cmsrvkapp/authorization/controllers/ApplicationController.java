@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"SpringAutowiredFieldsWarningInspection", "SpringJavaInjectionPointsAutowiringInspection"})
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/apps")
 @Validated
 public class ApplicationController {
 
@@ -44,6 +44,19 @@ public class ApplicationController {
 
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/")
+    public ResponseEntity addApplication(@RequestBody ApplicationView app,
+                                         HttpSession httpSession) {
+        try {
+            dbApplications.addApplication(app);
+            return ResponseEntity.status(HttpStatus.CREATED).body(app);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+    }
+
 
     @RequestMapping(method = RequestMethod.POST, path = "/{appName}/config")
     public ResponseEntity setConfig(@Valid @RequestBody  String config,
@@ -59,7 +72,7 @@ public class ApplicationController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{appName}/downloadJS")
+    @RequestMapping(method = RequestMethod.GET, path = "/{appName}/downloadJSON")
     public ResponseEntity dowloadJSON(@PathVariable(value = "appName") String appName,
                                     HttpSession httpSession) {
         try {
