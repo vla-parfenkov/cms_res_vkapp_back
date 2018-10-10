@@ -28,7 +28,7 @@ public class ApplicationController {
     @Autowired
     private ApplicationService dbApplications;
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{appName}/config")
+    @RequestMapping(method = RequestMethod.GET, path = "{appName}/config")
     public ResponseEntity getConfig(@PathVariable(value = "appName") String appName,
                                     @RequestHeader(value = "accept", required = false) String accept,
                                     HttpSession httpSession) {
@@ -44,7 +44,7 @@ public class ApplicationController {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/")
+    @RequestMapping(method = RequestMethod.POST, path = "")
     public ResponseEntity addApplication(@RequestBody ApplicationView app,
                                          HttpSession httpSession) {
         try {
@@ -58,7 +58,7 @@ public class ApplicationController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, path = "/{appName}/config")
+    @RequestMapping(method = RequestMethod.POST, path = "{appName}/config")
     public ResponseEntity setConfig(@Valid @RequestBody  String config,
                                     @PathVariable(value = "appName") String appName,
                                     @RequestHeader(value = "Accept", required = false) String accept,
@@ -72,7 +72,7 @@ public class ApplicationController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{appName}/downloadJSON")
+    @RequestMapping(method = RequestMethod.GET, path = "{appName}/downloadJSON")
     public ResponseEntity dowloadJSON(@PathVariable(value = "appName") String appName,
                                     HttpSession httpSession) {
         try {

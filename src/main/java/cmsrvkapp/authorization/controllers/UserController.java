@@ -69,7 +69,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(ResponseView.SUCCESS_LOGOUT);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "users", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(method = RequestMethod.POST, path = "", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity register(@Valid @RequestBody UserView registerData) {
         try {
@@ -84,7 +84,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(registerData);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "users/{changedUser}",
+    @RequestMapping(method = RequestMethod.POST, path = "{changedUser}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity change(@Valid @RequestBody UserView newData,
                                  @PathVariable(value = "changedUser") String changedUser,
