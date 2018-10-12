@@ -54,8 +54,8 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public String getConfig(ApplicationView app) {
-        String sql = "SELECT config FROM applications WHERE creatorLogin = ?";
-        String config = template.queryForObject(sql, READ_CONFIG_MAPPER, app.getCreatorLogin());
+        String sql = "SELECT config FROM applications WHERE app_name = ?";
+        String config = template.queryForObject(sql, READ_CONFIG_MAPPER, app.getAppName());
         if (config != null) {
             return config;
         } else {
@@ -72,7 +72,7 @@ public class JdbcApplicationService implements ApplicationService {
         } catch (SQLException ex) {
             throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
         }
-        String sql = "UPDATE applications SET config = ? WHERE creatorLogin = ?";
-        template.update(sql, pgobject, app.getCreatorLogin());
+        String sql = "UPDATE applications SET config = ? WHERE app_name = ?";
+        template.update(sql, pgobject, app.getAppName());
     }
 }
