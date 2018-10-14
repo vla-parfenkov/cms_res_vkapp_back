@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS servers
+(
+server_url TEXT PRIMARY KEY NOT NULL,
+instance_count INTEGER DEFAULT 0
+);

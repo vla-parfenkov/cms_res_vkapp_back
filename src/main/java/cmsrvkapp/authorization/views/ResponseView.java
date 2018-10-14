@@ -16,7 +16,8 @@ public enum ResponseView {
     ERROR_BAD_CONFIG(10, "Bad Configuration!"),
     ERROR_APP_ALREADY_EXISTS(11, "Applications already exists!"),
     ERROR_APP_NOT_FOUND(12, "Application not found!"),
-    ERROR_NO_RIGHTS_TO_CHANGE_APP(13, "You have no rights to change this app data1");
+    ERROR_NO_RIGHTS_TO_CHANGE_APP(13, "You have no rights to change this app data!"),
+    ERROR_DEPLOY(14, "Error deploy, try again");
 
 
     private final Integer status;
