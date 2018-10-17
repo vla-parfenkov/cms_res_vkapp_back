@@ -111,7 +111,7 @@ public class ApplicationController {
             RestTemplate restTemplate = new RestTemplate();
             HttpEntity<ApplicationView> requestBody = new HttpEntity<>(app);
             String url = dbServers.getUrl();
-            String urlDeploy = url + "/" + app.getAppName() + "/deploy";
+            String urlDeploy = url + "/deploy";
             ResponseEntity<ApplicationView> result = restTemplate.postForEntity(urlDeploy,
                     requestBody, ApplicationView.class);
 
