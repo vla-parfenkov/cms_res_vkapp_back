@@ -59,7 +59,7 @@ public class ApplicationController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "{appName}/config")
-    public ResponseEntity setConfig(@Valid @RequestBody  String config,
+    public ResponseEntity setConfig(@Valid @RequestBody String config,
                                     @PathVariable(value = "appName") String appName,
                                     @RequestHeader(value = "Accept", required = false) String accept,
                                     HttpSession httpSession) {
