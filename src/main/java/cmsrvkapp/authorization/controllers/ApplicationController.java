@@ -112,8 +112,8 @@ public class ApplicationController {
             HttpEntity<ApplicationView> requestBody = new HttpEntity<>(app);
             String url = dbServers.getUrl();
             String urlDeploy = url + "/deploy";
-            ResponseEntity<ApplicationView> result = restTemplate.postForEntity(urlDeploy,
-                    requestBody, ApplicationView.class);
+            ResponseEntity<String> result = restTemplate.postForEntity(urlDeploy,
+                    requestBody, String.class);
 
             if (result.getStatusCode() == HttpStatus.OK) {
                 dbServers.instanceWasAdded(url);
