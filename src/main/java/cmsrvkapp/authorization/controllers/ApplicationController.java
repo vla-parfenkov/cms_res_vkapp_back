@@ -80,7 +80,7 @@ public class ApplicationController {
         try {
             ApplicationView app = dbApplications.getByName(appName);
             String config = dbApplications.getConfig(app);
-            String pagesJSContent = "const json = " + config + "\nexport default JSON.parse(json);";
+            String pagesJSContent = "const json = " + config + ";\nexport default json;";
             return ResponseEntity.status(HttpStatus.OK).body(pagesJSContent);
 //            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("template.json");
 //
@@ -127,15 +127,5 @@ public class ApplicationController {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "server")
-    public ResponseEntity addServer(@Valid @RequestBody  String url,
-                                    @RequestHeader(value = "Accept", required = false) String accept) {
-        try {
-            dbServers.addServer(url);
-            return ResponseEntity.status(HttpStatus.OK).body(url);
-        } catch (DataAccessException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-    }
 
 }
