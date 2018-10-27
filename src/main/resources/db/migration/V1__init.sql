@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS applications
 (
 app_name TEXT PRIMARY KEY NOT NULL,
 creator_login TEXT REFERENCES users(login),
+service_id INTEGER,
 config jsonb
 );

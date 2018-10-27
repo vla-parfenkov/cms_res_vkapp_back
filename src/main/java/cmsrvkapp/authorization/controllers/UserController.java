@@ -1,5 +1,6 @@
 package cmsrvkapp.authorization.controllers;
 
+import cmsrvkapp.authorization.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
@@ -24,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserService dbUsers;
+
+    @Autowired
+    private ApplicationService dbApplications;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -109,5 +113,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_USER);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "appsInfo")
+    public ResponseEntity appsInfo(HttpSession httpSession) {
+        final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
+        }
+        try {
+            UserView user = dbUsers.getByLoginOrEmail(currentUser);
+            return ResponseEntity.status(HttpStatus.OK).body(dbApplications.getByCreatorLogin(user.getLogin()));
+        } catch (DataAccessException ex) {
+            httpSession.setAttribute(CURRENT_USER_KEY, null);
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_NOT_LOGGED_IN);
+        }
+    }
 
 }

@@ -36,6 +36,10 @@ public class ApplicationController {
                                     HttpSession httpSession) {
         try {
             ApplicationView app = dbApplications.getByName(appName);
+            final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+            if (!currentUser.equals(app.getCreatorLogin())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
+            }
             String config = dbApplications.getConfig(app);
             return ResponseEntity.status(HttpStatus.OK).body(config);
         } catch (DataAccessException ex) {
@@ -51,6 +55,10 @@ public class ApplicationController {
                                          HttpSession httpSession) {
         try {
             dbApplications.addApplication(app);
+            final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+            if (!currentUser.equals(app.getCreatorLogin())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
+            }
             return ResponseEntity.status(HttpStatus.CREATED).body(app);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
@@ -67,6 +75,10 @@ public class ApplicationController {
                                     HttpSession httpSession) {
         try {
             ApplicationView app = dbApplications.getByName(appName);
+            final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+            if (!currentUser.equals(app.getCreatorLogin())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
+            }
             dbApplications.setConfig(app, config);
             return ResponseEntity.status(HttpStatus.OK).body(dbApplications.getConfig(app));
         } catch (DataAccessException ex) {
@@ -104,10 +116,10 @@ public class ApplicationController {
                                     HttpSession httpSession) {
         try {
             ApplicationView app = dbApplications.getByName(appName);
-            //final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-            //if (!currentUser.equals(app.getCreatorLogin())) {
-            //    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
-            //}
+            final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
+            if (!currentUser.equals(app.getCreatorLogin())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
+            }
             RestTemplate restTemplate = new RestTemplate();
             HttpEntity<ApplicationView> requestBody = new HttpEntity<>(app);
             String url = dbServers.getUrl();

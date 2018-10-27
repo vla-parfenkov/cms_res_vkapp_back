@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class JdbcApplicationService implements ApplicationService {
@@ -24,7 +25,7 @@ public class JdbcApplicationService implements ApplicationService {
 
     private static final RowMapper<ApplicationView> READ_APPLICATION_MAPPER = (resultSet, rowNumber) ->
             new ApplicationView(resultSet.getString("app_name"),
-                    resultSet.getString("creator_login"));
+                    resultSet.getString("creator_login"), resultSet.getInt("service_id"));
 
     public JdbcApplicationService(JdbcTemplate template) {
         this.template = template;
@@ -32,20 +33,20 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public void addApplication(ApplicationView app) {
-        String sql = "INSERT INTO applications (app_name, creator_login) VALUES (?, ?)";
-        template.update(sql, app.getAppName(), app.getCreatorLogin());
+        String sql = "INSERT INTO applications (app_name, creator_login, service_id) VALUES (?, ?, ?)";
+        template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId());
     }
 
     @Override
     public ApplicationView getByName(String appName) {
-        String sql = "SELECT DISTINCT app_name, creator_login FROM applications WHERE app_name = ?";
+        String sql = "SELECT DISTINCT app_name, creator_login, service_id FROM applications WHERE app_name = ?";
         return template.queryForObject(sql, READ_APPLICATION_MAPPER, appName);
     }
 
     @Override
     public ApplicationView changeApplication(ApplicationView app) {
-        String sql = "UPDATE application SET (app_name, creator_login) = (?, ?) WHERE app_name = ?";
-        if (template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getAppName()) != 0) {
+        String sql = "UPDATE application SET (app_name, creator_login, service_id) = (?, ?, ?) WHERE app_name = ?";
+        if (template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId(), app.getAppName()) != 0) {
             return app;
         }
         return null;
@@ -74,5 +75,11 @@ public class JdbcApplicationService implements ApplicationService {
         }
         String sql = "UPDATE applications SET config = ? WHERE app_name = ?";
         template.update(sql, pgobject, app.getAppName());
+    }
+
+    @Override
+    public List<ApplicationView> getByCreatorLogin(String creatorLogin) {
+        String sql = "SELECT app_name, creator_login, service_id FROM applications WHERE creator_login = ?";
+        return template.query(sql, READ_APPLICATION_MAPPER, creatorLogin);
     }
 }

@@ -8,9 +8,13 @@ public final class ApplicationView {
 
     private String creatorLogin;
 
-    public ApplicationView(@JsonProperty("appName") String appName, @JsonProperty("creatorLogin") String creatorLogin) {
+    private Integer serviceId;
+
+    public ApplicationView(@JsonProperty("appName") String appName, @JsonProperty("creatorLogin") String creatorLogin,
+                           @JsonProperty("serviceId") Integer serviceId) {
         this.appName = appName;
         this.creatorLogin = creatorLogin;
+        this.serviceId = serviceId;
     }
 
     @Override
@@ -32,6 +36,14 @@ public final class ApplicationView {
 
     public void setCreatorLogin(String creatorLogin) {
         this.creatorLogin = creatorLogin;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 
     @Override
