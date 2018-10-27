@@ -54,11 +54,11 @@ public class ApplicationController {
     public ResponseEntity addApplication(@RequestBody ApplicationView app,
                                          HttpSession httpSession) {
         try {
-            dbApplications.addApplication(app);
             final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
             if (!currentUser.equals(app.getCreatorLogin())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
+            dbApplications.addApplication(app);
             return ResponseEntity.status(HttpStatus.CREATED).body(app);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
