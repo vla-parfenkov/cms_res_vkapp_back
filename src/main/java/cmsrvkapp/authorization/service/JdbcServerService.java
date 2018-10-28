@@ -47,4 +47,19 @@ public class JdbcServerService implements ServerService {
         String sql = "UPDATE servers SET instance_count = instance_count + 1 WHERE server_url = ?";
         template.update(sql, url);
     }
+
+    @Override
+    public String getKey(String url) {
+        String sql = "SELECT server_key FROM servers WHERE server_url = ?";
+        List<Map<String, Object>> result = template.queryForList(sql, url);
+        return (String) result.get(0).get("server_key");
+    }
+
+
+    @Override
+    public Boolean checkKey(String key) {
+        String sql = "SELECT * FROM servers WHERE server_key = ?";
+        List<Map<String, Object>> result = template.queryForList(sql, key);
+        return !result.isEmpty();
+    }
 }

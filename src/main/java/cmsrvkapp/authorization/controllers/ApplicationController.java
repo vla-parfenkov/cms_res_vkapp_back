@@ -88,8 +88,12 @@ public class ApplicationController {
 
     @RequestMapping(method = RequestMethod.GET, path = "{appName}/downloadJSON")
     public ResponseEntity dowloadJSON(@PathVariable(value = "appName") String appName,
+                                      @RequestParam(value = "server_key") String serverKey,
                                     HttpSession httpSession) {
         try {
+            if (dbServers.checkKey(serverKey)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
+            }
             ApplicationView app = dbApplications.getByName(appName);
             String config = dbApplications.getConfig(app);
             String pagesJSContent = "const json = " + config + ";\nexport default json;";
@@ -121,15 +125,18 @@ public class ApplicationController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
             RestTemplate restTemplate = new RestTemplate();
-            HttpEntity<ApplicationView> requestBody = new HttpEntity<>(app);
             String url = dbServers.getUrl();
+            HttpEntity<DeployView> requestBody = new HttpEntity<>(new DeployView(app.getAppName(),
+                    dbServers.getKey(url)));
             String urlDeploy = url + "/deploy";
             ResponseEntity<String> result = restTemplate.postForEntity(urlDeploy,
                     requestBody, String.class);
 
             if (result.getStatusCode() == HttpStatus.OK) {
                 dbServers.instanceWasAdded(url);
-                return ResponseEntity.status(HttpStatus.OK).body(url);
+                return ResponseEntity.status(HttpStatus.OK).body("{\"url\": \"" + url + "\"}");
+            } else if (result.getStatusCode() == HttpStatus.ALREADY_REPORTED) {
+                return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(ResponseView.ALREADY_DEPLOYED);
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseView.ERROR_DEPLOY);
             }

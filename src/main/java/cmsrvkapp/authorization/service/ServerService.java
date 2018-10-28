@@ -11,4 +11,8 @@ public interface ServerService {
     void instanceWasRemoved(String url);
 
     void instanceWasAdded(String url);
+
+    String getKey(String url);
+
+    Boolean checkKey(String key);
 }
