@@ -98,17 +98,6 @@ public class ApplicationController {
             String config = dbApplications.getConfig(app);
             String pagesJSContent = "const json = " + config + ";\nexport default json;";
             return ResponseEntity.status(HttpStatus.OK).body(pagesJSContent);
-//            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("template.json");
-//
-//            String template = new BufferedReader(new InputStreamReader(is))
-//                    .lines().collect(Collectors.joining("\n"));
-//
-//            JSONObject templateJSON = new JSONObject(template);
-//            JSONObject configJSON = new JSONObject(config);
-//
-//            Generator.generate(configJSON, templateJSON);
-//
-//            return ResponseEntity.status(HttpStatus.OK).body(templateJSON.toString());
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
         }

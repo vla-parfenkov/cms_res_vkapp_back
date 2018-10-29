@@ -19,7 +19,7 @@ public final class ApplicationView {
 
     @Override
     public String toString() {
-        return "appName = " + appName + " creatorLogin = " + creatorLogin;
+        return "appName = " + appName + " creatorLogin = " + creatorLogin + " serviceId = " + serviceId;
     }
 
     public String getAppName() {
@@ -67,8 +67,13 @@ public final class ApplicationView {
         }
         if (creatorLogin == null) {
             return other.creatorLogin == null;
+        } else if (!creatorLogin.equals(other.creatorLogin)) {
+            return false;
+        }
+        if (serviceId == null) {
+            return other.serviceId == null;
         } else {
-            return creatorLogin.equals(other.creatorLogin);
+            return serviceId.equals(other.serviceId);
         }
     }
 
