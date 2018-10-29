@@ -17,7 +17,10 @@ import javax.validation.Valid;
 
 @SuppressWarnings({"SpringAutowiredFieldsWarningInspection", "SpringJavaInjectionPointsAutowiringInspection"})
 @RestController
-@CrossOrigin(origins = "https://cmsvkapp-test.herokuapp.com, https://cmsvkapp-admin.herokuapp.com, http://localhost:8080, http://localhost:9000")
+@CrossOrigin(origins = { "https://cmsvkapp-test.herokuapp.com",
+        "https://cmsvkapp-admin.herokuapp.com",
+        "http://localhost:8080",
+        "http://localhost:9000" })
 @RequestMapping(path = "/api/apps")
 @Validated
 public class ApplicationController {
