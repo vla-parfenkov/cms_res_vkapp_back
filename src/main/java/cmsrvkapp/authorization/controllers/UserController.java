@@ -21,7 +21,8 @@ import javax.validation.Valid;
 @CrossOrigin(origins = { "https://cmsvkapp-test.herokuapp.com",
         "https://cmsvkapp-admin.herokuapp.com",
         "http://localhost:8080",
-        "http://localhost:9000" })
+        "http://localhost:9000" },
+        allowCredentials = "true")
 @RequestMapping(path = "/api/users")
 @Validated
 public class UserController {
