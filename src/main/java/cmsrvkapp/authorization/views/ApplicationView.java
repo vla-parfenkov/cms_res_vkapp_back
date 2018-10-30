@@ -10,11 +10,24 @@ public final class ApplicationView {
 
     private Integer serviceId;
 
+    private String serverUrl;
+
+    private ApplicationState state;
+
     public ApplicationView(@JsonProperty("appName") String appName, @JsonProperty("creatorLogin") String creatorLogin,
                            @JsonProperty("serviceId") Integer serviceId) {
         this.appName = appName;
         this.creatorLogin = creatorLogin;
         this.serviceId = serviceId;
+    }
+
+    public ApplicationView(String appName, String creatorLogin, Integer serviceId,
+                           String serverUrl, ApplicationState state) {
+        this.appName = appName;
+        this.creatorLogin = creatorLogin;
+        this.serviceId = serviceId;
+        this.serverUrl = serverUrl;
+        this.state = state;
     }
 
     @Override
@@ -44,6 +57,22 @@ public final class ApplicationView {
 
     public void setServiceId(Integer serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
+    public ApplicationState getState() {
+        return state;
+    }
+
+    public void setState(ApplicationState state) {
+        this.state = state;
     }
 
     @Override

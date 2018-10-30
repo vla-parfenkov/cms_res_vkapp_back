@@ -101,6 +101,8 @@ public class ApplicationController {
             ApplicationView app = dbApplications.getByName(appName);
             String config = dbApplications.getConfig(app);
             String pagesJSContent = "const json = " + config + ";\nexport default json;";
+            app.setState(ApplicationState.STARTED);
+            dbApplications.setState(app);
             return ResponseEntity.status(HttpStatus.OK).body(pagesJSContent);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
@@ -117,8 +119,18 @@ public class ApplicationController {
             if (!currentUser.equals(app.getCreatorLogin())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
+            if (app.getState().equals(ApplicationState.STARTS)) {
+                return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(ResponseView.ALREADY_DEPLOYED);
+            }
+            app.setState(ApplicationState.STARTS);
+            dbApplications.setState(app);
+            if (app.getServerUrl() == null) {
+                app.setServerUrl(dbServers.getUrl());
+                dbApplications.setUrl(app);
+                dbServers.instanceWasAdded(app.getServerUrl());
+            }
+            String url = app.getServerUrl();
             RestTemplate restTemplate = new RestTemplate();
-            String url = dbServers.getUrl();
             HttpEntity<DeployView> requestBody = new HttpEntity<>(new DeployView(app.getAppName(),
                     dbServers.getKey(url)));
             String urlDeploy = url + "/deploy";
@@ -126,7 +138,6 @@ public class ApplicationController {
                     requestBody, String.class);
 
             if (result.getStatusCode() == HttpStatus.OK) {
-                dbServers.instanceWasAdded(url);
                 return ResponseEntity.status(HttpStatus.OK).body("{\"url\": \"" + url + "\"}");
             } else if (result.getStatusCode() == HttpStatus.ALREADY_REPORTED) {
                 return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(ResponseView.ALREADY_DEPLOYED);

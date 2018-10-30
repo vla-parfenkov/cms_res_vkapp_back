@@ -1,5 +1,6 @@
 package cmsrvkapp.authorization.service;
 
+import cmsrvkapp.authorization.views.ApplicationState;
 import cmsrvkapp.authorization.views.ApplicationView;
 import cmsrvkapp.authorization.views.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +26,9 @@ public class JdbcApplicationService implements ApplicationService {
 
     private static final RowMapper<ApplicationView> READ_APPLICATION_MAPPER = (resultSet, rowNumber) ->
             new ApplicationView(resultSet.getString("app_name"),
-                    resultSet.getString("creator_login"), resultSet.getInt("service_id"));
+                    resultSet.getString("creator_login"), resultSet.getInt("service_id"),
+                    resultSet.getString("server_url"),
+                    ApplicationState.valueOf(resultSet.getString("app_state")));
 
     public JdbcApplicationService(JdbcTemplate template) {
         this.template = template;
@@ -81,5 +84,17 @@ public class JdbcApplicationService implements ApplicationService {
     public List<ApplicationView> getByCreatorLogin(String creatorLogin) {
         String sql = "SELECT app_name, creator_login, service_id FROM applications WHERE creator_login = ?";
         return template.query(sql, READ_APPLICATION_MAPPER, creatorLogin);
+    }
+
+    @Override
+    public void setUrl(ApplicationView app) {
+        String sql = "UPDATE applications SET server_url = ? WHERE app_name = ?";
+        template.update(sql, app.getServerUrl(), app.getAppName());
+    }
+
+    @Override
+    public void setState(ApplicationView app) {
+        String sql = "UPDATE applications SET app_state = ? WHERE app_name = ?";
+        template.update(sql, app.getState().name(), app.getAppName());
     }
 }

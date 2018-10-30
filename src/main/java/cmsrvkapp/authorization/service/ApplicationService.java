@@ -17,4 +17,8 @@ public interface ApplicationService {
     String getConfig(ApplicationView app);
 
     void setConfig(ApplicationView app, String config);
+
+    void setUrl(ApplicationView app);
+
+    void setState(ApplicationView app);
 }
