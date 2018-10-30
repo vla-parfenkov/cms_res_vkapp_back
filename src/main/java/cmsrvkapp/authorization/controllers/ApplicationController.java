@@ -41,7 +41,7 @@ public class ApplicationController {
         try {
             ApplicationView app = dbApplications.getByName(appName);
             final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-            if (!currentUser.equals(app.getCreatorLogin())) {
+            if (currentUser == null || !currentUser.equals(app.getCreatorLogin())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
             String config = dbApplications.getConfig(app);
@@ -59,7 +59,7 @@ public class ApplicationController {
                                          HttpSession httpSession) {
         try {
             final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-            if (!currentUser.equals(app.getCreatorLogin())) {
+            if (currentUser == null || !currentUser.equals(app.getCreatorLogin())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
             dbApplications.addApplication(app);
@@ -80,7 +80,7 @@ public class ApplicationController {
         try {
             ApplicationView app = dbApplications.getByName(appName);
             final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-            if (!currentUser.equals(app.getCreatorLogin())) {
+            if (currentUser == null || !currentUser.equals(app.getCreatorLogin())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
             dbApplications.setConfig(app, config);
@@ -116,7 +116,7 @@ public class ApplicationController {
         try {
             ApplicationView app = dbApplications.getByName(appName);
             final String currentUser = (String) httpSession.getAttribute(CURRENT_USER_KEY);
-            if (!currentUser.equals(app.getCreatorLogin())) {
+            if (currentUser == null || !currentUser.equals(app.getCreatorLogin())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
             if (app.getState().equals(ApplicationState.STARTS)) {

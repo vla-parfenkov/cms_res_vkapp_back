@@ -60,6 +60,6 @@ public class JdbcServerService implements ServerService {
     public Boolean checkKey(String key) {
         String sql = "SELECT * FROM servers WHERE server_key = ?";
         List<Map<String, Object>> result = template.queryForList(sql, key);
-        return !result.isEmpty();
+        return result.isEmpty();
     }
 }
