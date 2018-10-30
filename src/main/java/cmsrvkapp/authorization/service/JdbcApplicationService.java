@@ -36,19 +36,20 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public void addApplication(ApplicationView app) {
-        String sql = "INSERT INTO applications (app_name, creator_login, service_id) VALUES (?, ?, ?)";
-        template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId());
+        String sql = "INSERT INTO applications (app_name, creator_login, service_id, server_url, app_state) VALUES (?, ?, ?, ?, ?)";
+        template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId(), app.getServerUrl(), app.getState());
     }
 
     @Override
     public ApplicationView getByName(String appName) {
-        String sql = "SELECT DISTINCT app_name, creator_login, service_id FROM applications WHERE app_name = ?";
+        String sql = "SELECT DISTINCT app_name, creator_login, service_id, server_url, app_state FROM applications WHERE app_name = ?";
         return template.queryForObject(sql, READ_APPLICATION_MAPPER, appName);
     }
 
     @Override
     public ApplicationView changeApplication(ApplicationView app) {
-        String sql = "UPDATE application SET (app_name, creator_login, service_id) = (?, ?, ?) WHERE app_name = ?";
+        String sql =
+                "UPDATE application SET (app_name, creator_login, service_id, server_url, app_state) = (?, ?, ?, ?, ?) WHERE app_name = ?";
         if (template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId(), app.getAppName()) != 0) {
             return app;
         }
@@ -82,7 +83,7 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public List<ApplicationView> getByCreatorLogin(String creatorLogin) {
-        String sql = "SELECT app_name, creator_login, service_id FROM applications WHERE creator_login = ?";
+        String sql = "SELECT app_name, creator_login, service_id, server_url, app_state FROM applications WHERE creator_login = ?";
         return template.query(sql, READ_APPLICATION_MAPPER, creatorLogin);
     }
 
