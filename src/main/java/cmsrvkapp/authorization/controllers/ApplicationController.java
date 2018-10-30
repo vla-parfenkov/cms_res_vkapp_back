@@ -49,7 +49,7 @@ public class ApplicationController {
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
         } catch (IllegalArgumentException ex) {
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseView.ERROR_CONFIG_NOT_FOUND);
         }
 
     }
