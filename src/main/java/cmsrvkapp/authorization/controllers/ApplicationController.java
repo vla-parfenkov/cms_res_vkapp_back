@@ -138,6 +138,7 @@ public class ApplicationController {
                     requestBody, String.class);
 
             if (result.getStatusCode() == HttpStatus.OK) {
+                url += "/" + app.getAppName();
                 return ResponseEntity.status(HttpStatus.OK).body("{\"url\": \"" + url + "\"}");
             } else if (result.getStatusCode() == HttpStatus.ALREADY_REPORTED) {
                 return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(ResponseView.ALREADY_DEPLOYED);
