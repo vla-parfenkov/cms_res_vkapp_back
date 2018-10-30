@@ -95,7 +95,7 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public void setState(ApplicationView app) {
-        String sql = "UPDATE applications SET app_state = ? WHERE app_name = ?";
+        String sql = "UPDATE applications SET app_state = ?::state WHERE app_name = ?";
         template.update(sql, app.getState().name(), app.getAppName());
     }
 }
