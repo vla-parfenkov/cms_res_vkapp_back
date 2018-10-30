@@ -36,8 +36,8 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public void addApplication(ApplicationView app) {
-        String sql = "INSERT INTO applications (app_name, creator_login, service_id, server_url, app_state) VALUES (?, ?, ?, ?, ?)";
-        template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId(), app.getServerUrl(), app.getState());
+        String sql = "INSERT INTO applications (app_name, creator_login, service_id) VALUES (?, ?, ?)";
+        template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId());
     }
 
     @Override
