@@ -17,10 +17,11 @@ public final class ApplicationView {
     private String config;
 
     public ApplicationView(@JsonProperty("appName") String appName, @JsonProperty("creatorLogin") String creatorLogin,
-                           @JsonProperty("serviceId") Integer serviceId) {
+                           @JsonProperty("serviceId") Integer serviceId, @JsonProperty("config") String config) {
         this.appName = appName;
         this.creatorLogin = creatorLogin;
         this.serviceId = serviceId;
+        this.config = config;
     }
 
     public ApplicationView(String appName, String creatorLogin, Integer serviceId,
