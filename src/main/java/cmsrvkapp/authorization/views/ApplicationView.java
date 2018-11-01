@@ -14,6 +14,8 @@ public final class ApplicationView {
 
     private ApplicationState state;
 
+    private String config;
+
     public ApplicationView(@JsonProperty("appName") String appName, @JsonProperty("creatorLogin") String creatorLogin,
                            @JsonProperty("serviceId") Integer serviceId) {
         this.appName = appName;
@@ -75,6 +77,14 @@ public final class ApplicationView {
         this.state = state;
     }
 
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -101,9 +111,15 @@ public final class ApplicationView {
         }
         if (serviceId == null) {
             return other.serviceId == null;
-        } else {
-            return serviceId.equals(other.serviceId);
+        } else if (!serviceId.equals(other.serviceId)) {
+            return false;
         }
+        if (config == null) {
+            return other.config == null;
+        } else {
+            return config.equals(other.config);
+        }
+
     }
 
 
