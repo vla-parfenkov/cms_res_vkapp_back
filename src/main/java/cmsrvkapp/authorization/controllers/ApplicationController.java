@@ -64,7 +64,7 @@ public class ApplicationController {
             }
             dbApplications.addApplication(app);
             if (app.getConfig() != null) {
-                dbApplications.setConfig(app, app.getConfig());
+                dbApplications.setConfig(dbApplications.getByName(app.getAppName()), app.getConfig());
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(app);
         } catch (DataAccessException ex) {
