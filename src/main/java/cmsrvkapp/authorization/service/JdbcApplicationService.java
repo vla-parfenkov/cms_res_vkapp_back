@@ -36,8 +36,21 @@ public class JdbcApplicationService implements ApplicationService {
 
     @Override
     public void addApplication(ApplicationView app) {
-        String sql = "INSERT INTO applications (app_name, creator_login, service_id) VALUES (?, ?, ?)";
-        template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId());
+        if (app.getConfig() == null) {
+            String sql = "INSERT INTO applications (app_name, creator_login, service_id) VALUES (?, ?, ?)";
+            template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId());
+        } else {
+            PGobject pgobject = new PGobject();
+            pgobject.setType("jsonb");
+            try {
+                pgobject.setValue(app.getConfig());
+            } catch (SQLException ex) {
+                throw new IllegalArgumentException(ResponseView.ERROR_BAD_CONFIG.getResponse());
+            }
+            String sql = "INSERT INTO applications (app_name, creator_login, service_id, config) VALUES (?, ?, ?, ?)";
+            template.update(sql, app.getAppName(), app.getCreatorLogin(), app.getServiceId(), pgobject);
+        }
+
     }
 
     @Override

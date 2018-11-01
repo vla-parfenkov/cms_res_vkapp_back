@@ -63,9 +63,6 @@ public class ApplicationController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
             }
             dbApplications.addApplication(app);
-            if (app.getConfig() != null) {
-                dbApplications.setConfig(dbApplications.getByName(app.getAppName()), app.getConfig());
-            }
             return ResponseEntity.status(HttpStatus.CREATED).body(app);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
