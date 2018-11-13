@@ -109,6 +109,23 @@ public class ApplicationController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "{appName}/stop")
+    public ResponseEntity stop(@PathVariable(value = "appName") String appName,
+                                      @RequestParam(value = "server_key") String serverKey,
+                                      HttpSession httpSession) {
+        try {
+            if (dbServers.checkKey(serverKey)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseView.ERROR_NO_RIGHTS_TO_CHANGE_APP);
+            }
+            ApplicationView app = dbApplications.getByName(appName);
+            app.setState(ApplicationState.STOPPED);
+            dbApplications.setState(app);
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseView.SUCCESS_STOP);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseView.ERROR_APP_NOT_FOUND);
+        }
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "{appName}/deploy")
     public ResponseEntity deploy(@PathVariable(value = "appName") String appName,
                                     @RequestHeader(value = "accept", required = false) String accept,

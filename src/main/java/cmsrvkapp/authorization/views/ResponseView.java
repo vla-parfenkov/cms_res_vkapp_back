@@ -18,7 +18,8 @@ public enum ResponseView {
     ERROR_APP_NOT_FOUND(12, "Application not found!"),
     ERROR_NO_RIGHTS_TO_CHANGE_APP(13, "You have no rights to change this app data!"),
     ERROR_DEPLOY(14, "Error deploy, try again"),
-    ALREADY_DEPLOYED(15, "Already deployed");
+    ALREADY_DEPLOYED(15, "Already deployed"),
+    SUCCESS_STOP(16, "Application stop");
 
 
     private final Integer status;
